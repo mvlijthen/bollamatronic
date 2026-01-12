@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Bollamatronic 3000</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #F5F5F5;
+            min-height: 100vh;
+            color: #000;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+        
+        /* Title styling - Back to the Future inspired */
+        .title {
+            text-align: center;
+            margin-bottom: 24px;
+            padding: 16px 20px;
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 8px;
+            border: 2px solid #FFD700;
+        }
+        
+        .title h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #FFD700;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+        
+        .title .subtitle {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: #FFD700;
+            text-shadow: 2px 2px 0 #FF6600;
+        }
+        
+        /* File loader screen */
+        .loader-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 50vh;
+            text-align: center;
+        }
+        
+        .loader-screen h2 {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 16px;
+        }
+        
+        .loader-screen p {
+            color: #666;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        
+        .load-button {
+            width: 140px;
+            height: 140px;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            background: url('buzzer.webp') center/contain no-repeat;
+            border: none;
+            background-color: transparent;
+            font-size: 0;
+            color: transparent;
+        }
+        
+        .load-button:active {
+            transform: scale(0.92);
+            filter: brightness(0.85);
+        }
+        
+        /* Soundboard grid */
+        .soundboard {
+            display: none;
+        }
+        
+        .soundboard.active {
+            display: block;
+        }
+        
+        /* Random button */
+        .random-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .buzzer {
+            width: 80px;
+            height: 80px;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            background: url('buzzer.webp') center/contain no-repeat;
+            border: none;
+            background-color: transparent;
+        }
+        
+        .buzzer.large {
+            width: 120px;
+            height: 120px;
+        }
+        
+        .buzzer:active {
+            transform: scale(0.92);
+            filter: brightness(0.85);
+        }
+        
+        .button-label {
+            text-align: center;
+            margin-top: 8dp;
+            font-size: 14px;
+            font-weight: 500;
+            color: #000;
+        }
+        
+        .button-label .count {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* Button grid */
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        
+        .button-cell {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 0;
+        }
+        
+        /* Hidden file input */
+        #folderInput {
+            display: none;
+        }
+        
+        /* Instructions */
+        .instructions {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 24px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .instructions h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+            color: #555;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <h1>THE</h1>
+            <div class="subtitle">BOLLAMATRONIC</div>
+            <div class="subtitle">3000</div>
+        </div>
+        
+        <!-- File loader screen -->
+        <div id="loaderScreen" class="loader-screen">
+            <h2>Welkom!</h2>
+            <p>Selecteer de map met audiobestanden om te beginnen.</p>
+            
+            <input type="file" id="folderInput" webkitdirectory multiple accept="audio/*">
+            <button class="load-button" onclick="document.getElementById('folderInput').click()"></button>
+            <div class="button-label" style="margin-top: 12px; font-weight: 700;">Laad audio</div>
+            
+            <div class="instructions">
+                <h3>Instructies voor iPhone:</h3>
+                <ol>
+                    <li>Zorg dat de audiobestanden in de Bestanden-app staan</li>
+                    <li>Tik op de knop hierboven</li>
+                    <li>Navigeer naar de map met audiobestanden</li>
+                    <li>Selecteer alle bestanden</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- Soundboard (hidden until files loaded) -->
+        <div id="soundboard" class="soundboard">
+            <div class="random-section">
+                <button class="buzzer large" onclick="playSound('random')"></button>
+                <div class="button-label">Random <span class="count">(34)</span></div>
+            </div>
+            
+            <div class="button-grid" id="buttonGrid">
+                <!-- Buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Sound configuration
+        const soundConfig = {
+            'damn_son': { label: 'Damn son', files: ['damn_son', 'damn_son2', 'damn_son3', 'damn_son4', 'damn_son5', 'damn_son6', 'damn_son7', 'damn_son8', 'damn_son9', 'damn_son10', 'damn_son11'] },
+            'wassup_bro': { label: 'Wassup bro', files: ['wassup_bro', 'wassup_bro2', 'wassup_bro3', 'wassup_bro4', 'wassup_bro5', 'wassup_bro6'] },
+            'brand_spanking_new': { label: 'Brand spanking new', files: ['brand_spanking_new', 'brand_spanking_new2'] },
+            'homies': { label: 'Homies', files: ['homies', 'homies2'] },
+            'wassup': { label: 'Wassup', files: ['wassup', 'wassup2'] },
+            'i_like_it': { label: 'I like it', files: ['i_like_it', 'i_like_it_a_lot'] },
+            'search_for_love': { label: 'Search for love', files: ['search_for_love', 'search_for_love2'] },
+            'oh': { label: 'Oh', files: ['oh', 'oh2'] },
+            'oh_shit': { label: 'Oh shit', files: ['oh_shit'] },
+            'damn_right_son': { label: 'Damn right son', files: ['damn_right_son'] },
+            'bromie': { label: 'Bromie', files: ['bromie'] },
+            'breaking_down': { label: 'Breaking down..', files: ['breaking_down_all_the_minerals_calcium_dirt_and_debris'] },
+            'money_in_da': { label: 'Money in da..', files: ['money_in_my_walletain_in_the_train'] }
+        };
+        
+        // Audio storage
+        let audioFiles = {};
+        let allAudioKeys = [];
+        
+        // Shuffle queues for each sound group
+        let shuffleQueues = {};
+        let allSoundsQueue = [];
+        
+        // Currently playing audio
+        let currentAudio = null;
+        
+        // File input handler
+        document.getElementById('folderInput').addEventListener('change', handleFiles);
+        
+        function handleFiles(event) {
+            const files = event.target.files;
+            
+            if (files.length === 0) return;
+            
+            // Process each file
+            for (let file of files) {
+                const fileName = file.name.toLowerCase().replace(/\.[^/.]+$/, '').replace(/[ ,]/g, '_');
+                audioFiles[fileName] = URL.createObjectURL(file);
+                allAudioKeys.push(fileName);
+            }
+            
+            // Check if we have enough files
+            if (Object.keys(audioFiles).length > 0) {
+                showSoundboard();
+            }
+        }
+        
+        function showSoundboard() {
+            document.getElementById('loaderScreen').style.display = 'none';
+            document.getElementById('soundboard').classList.add('active');
+            generateButtons();
+        }
+        
+        function generateButtons() {
+            const grid = document.getElementById('buttonGrid');
+            grid.innerHTML = '';
+            
+            for (let key in soundConfig) {
+                const config = soundConfig[key];
+                const count = config.files.length;
+                
+                const cell = document.createElement('div');
+                cell.className = 'button-cell';
+                
+                cell.innerHTML = `
+                    <button class="buzzer" onclick="playSound('${key}')"></button>
+                    <div class="button-label">${config.label}${count > 1 ? ` <span class="count">(${count})</span>` : ''}</div>
+                `;
+                
+                grid.appendChild(cell);
+            }
+        }
+        
+        function playSound(key) {
+            // Stop current audio
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+            
+            let fileKey;
+            
+            if (key === 'random') {
+                // Shuffle all sounds
+                if (allSoundsQueue.length === 0) {
+                    allSoundsQueue = [...allAudioKeys].sort(() => Math.random() - 0.5);
+                }
+                fileKey = allSoundsQueue.shift();
+            } else {
+                const config = soundConfig[key];
+                if (!config) return;
+                
+                // Get or create shuffle queue for this sound group
+                if (!shuffleQueues[key] || shuffleQueues[key].length === 0) {
+                    shuffleQueues[key] = [...config.files].sort(() => Math.random() - 0.5);
+                }
+                
+                fileKey = shuffleQueues[key].shift();
+            }
+            
+            // Find the audio file
+            const audioUrl = audioFiles[fileKey];
+            
+            if (audioUrl) {
+                currentAudio = new Audio(audioUrl);
+                currentAudio.play().catch(e => console.log('Audio play error:', e));
+            } else {
+                console.log('Audio not found:', fileKey);
+            }
+        }
+    </script>
+</body>
+</html>
