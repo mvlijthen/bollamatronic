@@ -6,7 +6,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Bollamatronic 3000</title>
-    <link rel="manifest" href="manifest.json">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap');
         
@@ -58,54 +57,6 @@
             text-shadow: 2px 2px 0 #FF6600;
         }
         
-        /* File loader screen */
-        .loader-screen {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 50vh;
-            text-align: center;
-        }
-        
-        .loader-screen h2 {
-            font-size: 1.3rem;
-            color: #333;
-            margin-bottom: 16px;
-        }
-        
-        .loader-screen p {
-            color: #666;
-            margin-bottom: 24px;
-            line-height: 1.6;
-        }
-        
-        .load-button {
-            width: 140px;
-            height: 140px;
-            cursor: pointer;
-            transition: all 0.1s ease;
-            background: url('buzzer.webp') center/contain no-repeat;
-            border: none;
-            background-color: transparent;
-            font-size: 0;
-            color: transparent;
-        }
-        
-        .load-button:active {
-            transform: scale(0.92);
-            filter: brightness(0.85);
-        }
-        
-        /* Soundboard grid */
-        .soundboard {
-            display: none;
-        }
-        
-        .soundboard.active {
-            display: block;
-        }
-        
         /* Random button */
         .random-section {
             display: flex;
@@ -120,8 +71,8 @@
             cursor: pointer;
             transition: all 0.1s ease;
             background: url('buzzer.webp') center/contain no-repeat;
-            border: none;
             background-color: transparent;
+            border: none;
         }
         
         .buzzer.large {
@@ -136,7 +87,7 @@
         
         .button-label {
             text-align: center;
-            margin-top: 8dp;
+            margin-top: 8px;
             font-size: 14px;
             font-weight: 500;
             color: #000;
@@ -160,37 +111,6 @@
             align-items: center;
             padding: 8px 0;
         }
-        
-        /* Hidden file input */
-        #folderInput {
-            display: none;
-        }
-        
-        /* Instructions */
-        .instructions {
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 24px;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-        
-        .instructions h3 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 0.95rem;
-        }
-        
-        .instructions ol {
-            padding-left: 20px;
-            color: #555;
-        }
-        
-        .instructions li {
-            margin-bottom: 8px;
-        }
     </style>
 </head>
 <body>
@@ -201,114 +121,104 @@
             <div class="subtitle">3000</div>
         </div>
         
-        <!-- File loader screen -->
-        <div id="loaderScreen" class="loader-screen">
-            <h2>Welkom!</h2>
-            <p>Selecteer de map met audiobestanden om te beginnen.</p>
-            
-            <input type="file" id="folderInput" webkitdirectory multiple accept="audio/*">
-            <button class="load-button" onclick="document.getElementById('folderInput').click()"></button>
-            <div class="button-label" style="margin-top: 12px; font-weight: 700;">Laad audio</div>
-            
-            <div class="instructions">
-                <h3>Instructies voor iPhone:</h3>
-                <ol>
-                    <li>Zorg dat de audiobestanden in de Bestanden-app staan</li>
-                    <li>Tik op de knop hierboven</li>
-                    <li>Navigeer naar de map met audiobestanden</li>
-                    <li>Selecteer alle bestanden</li>
-                </ol>
-            </div>
+        <div class="random-section">
+            <button class="buzzer large" onclick="playSound('random')"></button>
+            <div class="button-label">Random <span class="count">(34)</span></div>
         </div>
         
-        <!-- Soundboard (hidden until files loaded) -->
-        <div id="soundboard" class="soundboard">
-            <div class="random-section">
-                <button class="buzzer large" onclick="playSound('random')"></button>
-                <div class="button-label">Random <span class="count">(34)</span></div>
+        <div class="button-grid">
+            <div class="button-cell">
+                <button class="buzzer" onclick="playSound('damn_son')"></button>
+                <div class="button-label">Damn son <span class="count">(11)</span></div>
             </div>
-            
-            <div class="button-grid" id="buttonGrid">
-                <!-- Buttons will be generated by JavaScript -->
+            <div class="button-cell">
+                <button class="buzzer" onclick="playSound('wassup_bro')"></button>
+                <div class="button-label">Wassup bro <span class="count">(6)</span></div>
+            </div>
+            <div class="button-cell">
+                <button class="buzzer" onclick="playSound('brand_spanking_new')"></button>
+                <div class="button-label">Brand spanking new <span class="count">(2)</span></div>
+            </div>
+            <div class="button-cell">
+                <button class="buzzer" onclick="playSound('homies')"></button>
+                <div class="button-label">Homies <span class="count">(2)</span></div>
+            </div>
+            <div class="button-cell">
+                <button class="buzzer" onclick="playSound('wassup')"></button>
+                <div class="button-label">Wassup <span class="count">(2)</span></div>
+            </div>
+            <div class="button-cell">
+                <button class="buzzer" onclick="playSound('i_like_it')"></button>
+                <div class="button-label">I like it <span class="count">(2)</span></div>
+            </div>
+            <div class="button-cell">
+                <button class="buzzer" onclick="playSound('search_for_love')"></button>
+                <div class="button-label">Search for love <span class="count">(2)</span></div>
+            </div>
+            <div class="button-cell">
+                <button class="buzzer" onclick="playSound('oh')"></button>
+                <div class="button-label">Oh <span class="count">(2)</span></div>
+            </div>
+            <div class="button-cell">
+                <button class="buzzer" onclick="playSound('oh_shit')"></button>
+                <div class="button-label">Oh shit</div>
+            </div>
+            <div class="button-cell">
+                <button class="buzzer" onclick="playSound('damn_right_son')"></button>
+                <div class="button-label">Damn right son</div>
+            </div>
+            <div class="button-cell">
+                <button class="buzzer" onclick="playSound('bromie')"></button>
+                <div class="button-label">Bromie</div>
+            </div>
+            <div class="button-cell">
+                <button class="buzzer" onclick="playSound('breaking_down')"></button>
+                <div class="button-label">Breaking down..</div>
+            </div>
+            <div class="button-cell">
+                <button class="buzzer" onclick="playSound('money_in_da')"></button>
+                <div class="button-label">Money in da..</div>
             </div>
         </div>
     </div>
     
     <script>
-        // Sound configuration
+        // Base URL for audio files
+        const audioBase = 'Bollamatronic%20sounds/';
+        
+        // Sound configuration with file paths
         const soundConfig = {
-            'damn_son': { label: 'Damn son', files: ['damn_son', 'damn_son2', 'damn_son3', 'damn_son4', 'damn_son5', 'damn_son6', 'damn_son7', 'damn_son8', 'damn_son9', 'damn_son10', 'damn_son11'] },
-            'wassup_bro': { label: 'Wassup bro', files: ['wassup_bro', 'wassup_bro2', 'wassup_bro3', 'wassup_bro4', 'wassup_bro5', 'wassup_bro6'] },
-            'brand_spanking_new': { label: 'Brand spanking new', files: ['brand_spanking_new', 'brand_spanking_new2'] },
-            'homies': { label: 'Homies', files: ['homies', 'homies2'] },
-            'wassup': { label: 'Wassup', files: ['wassup', 'wassup2'] },
-            'i_like_it': { label: 'I like it', files: ['i_like_it', 'i_like_it_a_lot'] },
-            'search_for_love': { label: 'Search for love', files: ['search_for_love', 'search_for_love2'] },
-            'oh': { label: 'Oh', files: ['oh', 'oh2'] },
-            'oh_shit': { label: 'Oh shit', files: ['oh_shit'] },
-            'damn_right_son': { label: 'Damn right son', files: ['damn_right_son'] },
-            'bromie': { label: 'Bromie', files: ['bromie'] },
-            'breaking_down': { label: 'Breaking down..', files: ['breaking_down_all_the_minerals_calcium_dirt_and_debris'] },
-            'money_in_da': { label: 'Money in da..', files: ['money_in_my_walletain_in_the_train'] }
+            'damn_son': [
+                'damn_son.opus', 'damn_son2.opus', 'damn_son3.opus', 'damn_son4.opus',
+                'damn_son5.opus', 'damn_son6.opus', 'damn_son7.opus', 'damn_son8.opus',
+                'damn_son9.opus', 'damn_son10.opus', 'damn_son11.opus'
+            ],
+            'wassup_bro': [
+                'wassup_bro.opus', 'wassup_bro2.opus', 'wassup_bro3.opus',
+                'wassup_bro4.opus', 'wassup_bro5.opus', 'wassup_bro6.opus'
+            ],
+            'brand_spanking_new': ['brand_spanking_new.opus', 'brand_spanking_new2.opus'],
+            'homies': ['homies.opus', 'homies2.opus'],
+            'wassup': ['wassup.opus', 'wassup2.opus'],
+            'i_like_it': ['i_like_it.opus', 'i_like_it_a_lot.opus'],
+            'search_for_love': ['search_for_love.opus', 'search_for_love2.opus'],
+            'oh': ['oh.opus', 'oh2.opus'],
+            'oh_shit': ['oh_shit.opus'],
+            'damn_right_son': ['damn_right_son.opus'],
+            'bromie': ['bromie.opus'],
+            'breaking_down': ['breaking_down_all_the_minerals_calcium_dirt_and_debris.opus'],
+            'money_in_da': ['money_in_my_walletain_in_the_train.opus']
         };
         
-        // Audio storage
-        let audioFiles = {};
-        let allAudioKeys = [];
+        // All sounds for random button
+        const allSounds = Object.values(soundConfig).flat();
         
-        // Shuffle queues for each sound group
-        let shuffleQueues = {};
+        // Shuffle queues
+        const shuffleQueues = {};
         let allSoundsQueue = [];
         
-        // Currently playing audio
+        // Current audio
         let currentAudio = null;
-        
-        // File input handler
-        document.getElementById('folderInput').addEventListener('change', handleFiles);
-        
-        function handleFiles(event) {
-            const files = event.target.files;
-            
-            if (files.length === 0) return;
-            
-            // Process each file
-            for (let file of files) {
-                const fileName = file.name.toLowerCase().replace(/\.[^/.]+$/, '').replace(/[ ,]/g, '_');
-                audioFiles[fileName] = URL.createObjectURL(file);
-                allAudioKeys.push(fileName);
-            }
-            
-            // Check if we have enough files
-            if (Object.keys(audioFiles).length > 0) {
-                showSoundboard();
-            }
-        }
-        
-        function showSoundboard() {
-            document.getElementById('loaderScreen').style.display = 'none';
-            document.getElementById('soundboard').classList.add('active');
-            generateButtons();
-        }
-        
-        function generateButtons() {
-            const grid = document.getElementById('buttonGrid');
-            grid.innerHTML = '';
-            
-            for (let key in soundConfig) {
-                const config = soundConfig[key];
-                const count = config.files.length;
-                
-                const cell = document.createElement('div');
-                cell.className = 'button-cell';
-                
-                cell.innerHTML = `
-                    <button class="buzzer" onclick="playSound('${key}')"></button>
-                    <div class="button-label">${config.label}${count > 1 ? ` <span class="count">(${count})</span>` : ''}</div>
-                `;
-                
-                grid.appendChild(cell);
-            }
-        }
         
         function playSound(key) {
             // Stop current audio
@@ -317,35 +227,25 @@
                 currentAudio.currentTime = 0;
             }
             
-            let fileKey;
+            let file;
             
             if (key === 'random') {
-                // Shuffle all sounds
                 if (allSoundsQueue.length === 0) {
-                    allSoundsQueue = [...allAudioKeys].sort(() => Math.random() - 0.5);
+                    allSoundsQueue = [...allSounds].sort(() => Math.random() - 0.5);
                 }
-                fileKey = allSoundsQueue.shift();
+                file = allSoundsQueue.shift();
             } else {
-                const config = soundConfig[key];
-                if (!config) return;
+                const files = soundConfig[key];
+                if (!files) return;
                 
-                // Get or create shuffle queue for this sound group
                 if (!shuffleQueues[key] || shuffleQueues[key].length === 0) {
-                    shuffleQueues[key] = [...config.files].sort(() => Math.random() - 0.5);
+                    shuffleQueues[key] = [...files].sort(() => Math.random() - 0.5);
                 }
-                
-                fileKey = shuffleQueues[key].shift();
+                file = shuffleQueues[key].shift();
             }
             
-            // Find the audio file
-            const audioUrl = audioFiles[fileKey];
-            
-            if (audioUrl) {
-                currentAudio = new Audio(audioUrl);
-                currentAudio.play().catch(e => console.log('Audio play error:', e));
-            } else {
-                console.log('Audio not found:', fileKey);
-            }
+            currentAudio = new Audio(audioBase + file);
+            currentAudio.play().catch(e => console.log('Audio error:', e));
         }
     </script>
 </body>
